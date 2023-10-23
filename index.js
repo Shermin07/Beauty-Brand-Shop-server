@@ -43,11 +43,18 @@ async function run() {
    
 
     app.get("/cartItem", async (req,res) =>{
-        //const query = {_id : new ObjectId(req.params.id)}
+       
         const cursor =  cartCollection.find();
         const result = await cursor.toArray();
         res.send(result);
     }) ;
+
+    app.delete('/cartItems/:id', async (req,res) =>{
+      const id = req.params.id ;
+      const query = {_id : new ObjectId(id)}
+      const result = await cartCollection.deleteOne(query);
+      res.send(result);
+    })
 
     app.get("/addToCart/:id", async (req,res) =>{
         const query = {_id: new ObjectId(req.params.id)}
